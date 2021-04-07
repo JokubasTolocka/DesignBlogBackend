@@ -9,7 +9,6 @@ dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 const app = express();
-
 const corsConfig = cors({ origin: `${process.env.CORS_ACCEPT_URL}` });
 
 app.use(corsConfig);
@@ -18,7 +17,7 @@ app.use(helmet());
 const s3Uploader = new AWSS3Uploader({
   accessKeyId: process.env.AWS_ACCESS_KEY || "",
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-  destinationBucketName: "my-really-cool-bucket",
+  destinationBucketName: "DesignPortfolio",
 });
 
 const server = new ApolloServer({
