@@ -1,7 +1,5 @@
-import { extname } from "path";
-import { v4 as uuid } from "uuid";
 import { GraphQLUpload } from "graphql-upload";
-import s3 from "./s3";
+import getImageUrls from "./getImageUrls";
 
 type File = {
   createReadStream: any;
@@ -12,25 +10,64 @@ type File = {
 
 export default {
   Upload: GraphQLUpload,
+  Query: {
+    designImages: async (
+      parent: any,
+      args: any,
+      { models: { designModel } }: { models: { designModel: any } }
+    ) => {
+      const designImages = await designModel.find().exec();
+      return designImages;
+    },
+    photographyImages: async (
+      parent: any,
+      args: any,
+      { models: { photographyModel } }: { models: { photographyModel: any } }
+    ) => {
+      const photographyImages = await photographyModel.find().exec();
+      return photographyImages;
+    },
+  },
   Mutation: {
-    singleUpload: async (_: any, { file }: { file: File }) => {
-      const { createReadStream, filename, mimetype, encoding } = await file;
+    photoUpload: async (
+      _: any,
+      {
+        normalFile,
+        compressedFile,
+      }: { normalFile: File; compressedFile: File },
+      { models: { photographyModel } }: { models: { photographyModel: any } }
+    ) => {
+      const [LocationNormal, LocationCompressed] = await getImageUrls(
+        normalFile,
+        compressedFile
+      );
 
-      const { Location } = await s3
-        // @ts-ignore
-        .upload({
-          Body: createReadStream(),
-          Key: `${uuid()}${extname(filename)}`,
-          ContentType: mimetype,
-        })
-        .promise();
+      const photographyImage = await photographyModel.create({
+        normalUrl: LocationNormal,
+        compressedUrl: LocationCompressed,
+      });
 
-      return {
-        filename,
-        mimetype,
-        encoding,
-        uri: Location,
-      };
+      return photographyImage;
+    },
+    designUpload: async (
+      _: any,
+      {
+        normalFile,
+        compressedFile,
+      }: { normalFile: File; compressedFile: File },
+      { models: { designModel } }: { models: { designModel: any } }
+    ) => {
+      const [LocationNormal, LocationCompressed] = await getImageUrls(
+        normalFile,
+        compressedFile
+      );
+
+      const designImage = await designModel.create({
+        normalUrl: LocationNormal,
+        compressedUrl: LocationCompressed,
+      });
+
+      return designImage;
     },
   },
 };

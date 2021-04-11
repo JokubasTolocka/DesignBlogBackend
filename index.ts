@@ -3,25 +3,28 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
+import { graphqlUploadExpress } from "graphql-upload";
+import mongoose from "mongoose";
 import typeDefs from "./src/typedefs";
 import resolvers from "./src/resolvers";
-import { GraphQLUpload, graphqlUploadExpress } from "graphql-upload";
+import designModel from "./models/designImage";
+import photographyModel from "./models/photographyImage";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 const corsConfig = cors({ origin: `${process.env.CORS_ACCEPT_URL}` });
 
-// const s3Uploader = new AWSS3Uploader({
-//   accessKeyId: process.env.AWS_ACCESS_KEY || "",
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
-//   destinationBucketName: "DesignPortfolio",
-// });
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   uploads: false,
+  context: {
+    models: {
+      designModel,
+      photographyModel,
+    },
+  },
 });
 
 const app = express();
@@ -40,9 +43,9 @@ server.applyMiddleware({ app, path: "/graphql" });
 
 app.listen(PORT, () => {
   console.log("App is running!");
-  // mongoose.connect(process.env.DB_URL, {
-  //   useNewUrlParser: true,
-  //   useUnifiedTopology: true,
-  //   keepAlive: true,
-  // });
+  mongoose.connect(encodeURI(process.env.DB_URL || "") || "", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    keepAlive: true,
+  });
 });

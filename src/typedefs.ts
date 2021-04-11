@@ -10,11 +10,19 @@ export default gql`
 
   scalar Upload
 
+  type Image {
+    id: ID!
+    normalUrl: String!
+    compressedUrl: String!
+  }
+
   type Query {
-    uploads: [File]
+    designImages: [Image!]!
+    photographyImages: [Image!]!
   }
 
   type Mutation {
-    singleUpload(file: Upload!): File
+    photoUpload(normalFile: Upload!, compressedFile: Upload!): File
+    designUpload(normalFile: Upload!, compressedFile: Upload!): File
   }
 `;
