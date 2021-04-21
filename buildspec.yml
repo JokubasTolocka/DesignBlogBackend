@@ -5,4 +5,3 @@ phases:
     commands:
       - echo Installing source NPM dependencies...
       - npm install
-      - pip install -upgrade awscli
