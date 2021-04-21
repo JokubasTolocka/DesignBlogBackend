@@ -39,6 +39,7 @@ app.use(
 );
 
 app.use(graphqlUploadExpress());
+
 server.applyMiddleware({ app, path: "/graphql" });
 
 app.listen(PORT, () => {
