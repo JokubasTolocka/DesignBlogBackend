@@ -34,7 +34,8 @@ export default {
       {
         normalFile,
         compressedFile,
-      }: { normalFile: File; compressedFile: File },
+        description,
+      }: { normalFile: File; compressedFile: File; description: string | null },
       { models: { photographyModel } }: { models: { photographyModel: any } }
     ) => {
       const [LocationNormal, LocationCompressed] = await getImageUrls(
@@ -45,16 +46,22 @@ export default {
       const photographyImage = await photographyModel.create({
         normalUrl: LocationNormal,
         compressedUrl: LocationCompressed,
+        description,
       });
 
-      return photographyImage;
+      return {
+        normalUrl: photographyImage.normalUrl,
+        compressedUrl: photographyImage.compressedUrl,
+        description,
+      };
     },
     designUpload: async (
       _: any,
       {
         normalFile,
         compressedFile,
-      }: { normalFile: File; compressedFile: File },
+        description,
+      }: { normalFile: File; compressedFile: File; description: string | null },
       { models: { designModel } }: { models: { designModel: any } }
     ) => {
       const [LocationNormal, LocationCompressed] = await getImageUrls(
@@ -65,9 +72,14 @@ export default {
       const designImage = await designModel.create({
         normalUrl: LocationNormal,
         compressedUrl: LocationCompressed,
+        description,
       });
 
-      return designImage;
+      return {
+        normalUrl: designImage.normalUrl,
+        compressedUrl: designImage.compressedUrl,
+        description,
+      };
     },
   },
 };

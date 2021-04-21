@@ -18,10 +18,10 @@ AWS_S3_BUCKET
 
 In Amazon AWS create a user in IAM, then create a bucket in S3, set the CORS and Bucket policies.
 
-Install dependencies with 
-```npm i```
+Install dependencies with
+`npm i`
 
-Finally, run with ```npm start```
+Finally, run with `npm start`
 
 # Notes
 

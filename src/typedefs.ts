@@ -1,19 +1,13 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-  type File {
-    uri: String!
-    filename: String!
-    mimetype: String!
-    encoding: String!
-  }
-
   scalar Upload
 
   type Image {
     id: ID!
     normalUrl: String!
     compressedUrl: String!
+    description: String
   }
 
   type Query {
@@ -22,7 +16,15 @@ export default gql`
   }
 
   type Mutation {
-    photoUpload(normalFile: Upload!, compressedFile: Upload!): File
-    designUpload(normalFile: Upload!, compressedFile: Upload!): File
+    photoUpload(
+      normalFile: Upload!
+      compressedFile: Upload!
+      description: String
+    ): Image
+    designUpload(
+      normalFile: Upload!
+      compressedFile: Upload!
+      description: String
+    ): Image
   }
 `;
