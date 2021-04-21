@@ -15,7 +15,7 @@ phases:
 # Include only the files required for your application to run.
 artifacts:
   files:
-    - index.ts
+    - app.ts
     - src/**/*
     - models/**/*
     - node_modules/**/*
