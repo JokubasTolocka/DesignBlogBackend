@@ -1,8 +1,9 @@
 {
   "name": "designblogbackend",
   "engines": {
-    "node": ">=0.12"
+    "node": "v14.15.3"
   },
+  "engineStrict": true,
   "version": "1.0.0",
   "description": "",
   "main": "app.ts",
