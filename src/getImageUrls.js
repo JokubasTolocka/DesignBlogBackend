@@ -1,13 +1,6 @@
 import getLocationUrl from "./getLocation";
 
-type File = {
-  createReadStream: any;
-  filename: string;
-  mimetype: string;
-  encoding: string;
-};
-
-const getImageUrls = async (normalFile: File, compressedFile: File) => {
+const getImageUrls = async (normalFile, compressedFile) => {
   const {
     createReadStream: createReadStreamNormal,
     filename: filenameNormal,

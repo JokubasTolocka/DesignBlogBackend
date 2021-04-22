@@ -1,28 +1,17 @@
 import { GraphQLUpload } from "graphql-upload";
 import getImageUrls from "./getImageUrls";
 
-type File = {
-  createReadStream: any;
-  filename: string;
-  mimetype: string;
-  encoding: string;
-};
-
 export default {
   Upload: GraphQLUpload,
   Query: {
-    designImages: async (
-      parent: any,
-      args: any,
-      { models: { designModel } }: { models: { designModel: any } }
-    ) => {
+    designImages: async (parent, args, { models: { designModel } }) => {
       const designImages = await designModel.find().exec();
       return designImages;
     },
     photographyImages: async (
-      parent: any,
-      args: any,
-      { models: { photographyModel } }: { models: { photographyModel: any } }
+      parent,
+      args,
+      { models: { photographyModel } }
     ) => {
       const photographyImages = await photographyModel.find().exec();
       return photographyImages;
@@ -30,13 +19,9 @@ export default {
   },
   Mutation: {
     photoUpload: async (
-      _: any,
-      {
-        normalFile,
-        compressedFile,
-        description,
-      }: { normalFile: File; compressedFile: File; description: string | null },
-      { models: { photographyModel } }: { models: { photographyModel: any } }
+      _,
+      { normalFile, compressedFile, description },
+      { models: { photographyModel } }
     ) => {
       const [LocationNormal, LocationCompressed] = await getImageUrls(
         normalFile,
@@ -56,13 +41,9 @@ export default {
       };
     },
     designUpload: async (
-      _: any,
-      {
-        normalFile,
-        compressedFile,
-        description,
-      }: { normalFile: File; compressedFile: File; description: string | null },
-      { models: { designModel } }: { models: { designModel: any } }
+      _,
+      { normalFile, compressedFile, description },
+      { models: { designModel } }
     ) => {
       const [LocationNormal, LocationCompressed] = await getImageUrls(
         normalFile,

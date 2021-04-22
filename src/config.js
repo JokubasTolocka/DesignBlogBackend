@@ -3,14 +3,7 @@ import AWS from "aws-sdk";
 
 dotenv.config();
 
-type Config = {
-  s3: AWS.S3.ClientConfiguration;
-  app: {
-    storageDir: string;
-  };
-};
-
-const config: Config = {
+const config = {
   s3: {
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY || "",

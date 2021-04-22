@@ -3,12 +3,11 @@ import { extname } from "path";
 import s3 from "./s3";
 
 export default async function getLocationUrl(
-  filename: string,
-  mimetype: string,
-  createReadStream: any
+  filename,
+  mimetype,
+  createReadStream
 ) {
   const { Location } = await s3
-    // @ts-ignore
     .upload({
       Body: createReadStream(),
       Key: `${uuid()}${extname(filename)}`,
