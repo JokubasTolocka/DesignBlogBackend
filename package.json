@@ -1,7 +1,7 @@
 {
   "name": "designblogbackend",
   "engines": {
-    "node": "v14.15.3"
+    "node": "14.15.3"
   },
   "engineStrict": true,
   "version": "1.0.0",
