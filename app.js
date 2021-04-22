@@ -13,7 +13,6 @@ import photographyModel from "./models/photographyImage";
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
-const corsConfig = cors({ origin: `${process.env.CORS_ACCEPT_URL}` });
 
 const server = new ApolloServer({
   typeDefs,
@@ -28,7 +27,6 @@ const server = new ApolloServer({
 });
 
 const app = express();
-app.use(corsConfig);
 
 // Apollo Playground get stuck on loading screen without this
 app.use(
