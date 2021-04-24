@@ -42,7 +42,7 @@ server.applyMiddleware({ app, path: "/graphql" });
 
 app.listen(PORT, () => {
   console.log("App is running!");
-  mongoose.connect(encodeURI(process.env.DB_URL || "") || "", {
+  mongoose.connect(encodeURI(`${process.env.DB_URL}` || "") || "", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     keepAlive: true,
