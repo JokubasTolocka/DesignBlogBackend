@@ -7,7 +7,7 @@ export default {
     designImages: async (parent, args, { models: { designModel } }) => {
       const designImages = await designModel
         .find()
-        .sort({ datefield: -1 })
+        .sort({ createdAt: -1 })
         .exec();
       return designImages;
     },
@@ -18,7 +18,7 @@ export default {
     ) => {
       const photographyImages = await photographyModel
         .find()
-        .sort({ datefield: -1 })
+        .sort({ createdAt: -1 })
         .exec();
       return photographyImages;
     },
