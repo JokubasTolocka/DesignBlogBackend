@@ -5,7 +5,10 @@ export default {
   Upload: GraphQLUpload,
   Query: {
     designImages: async (parent, args, { models: { designModel } }) => {
-      const designImages = await designModel.find().exec();
+      const designImages = await designModel
+        .find()
+        .sort({ datefield: -1 })
+        .exec();
       return designImages;
     },
     photographyImages: async (
@@ -13,7 +16,10 @@ export default {
       args,
       { models: { photographyModel } }
     ) => {
-      const photographyImages = await photographyModel.find().exec();
+      const photographyImages = await photographyModel
+        .find()
+        .sort({ datefield: -1 })
+        .exec();
       return photographyImages;
     },
   },
